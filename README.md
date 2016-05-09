@@ -8,3 +8,4 @@ The file gestureMapper.properties maps these 4 gestures to commands. For example
 
 To build this, run 'mvn clean install'. For this, you will need maven to be installed on your system. If you don't want to build it, but want to change command-gesture mapping, unzip the WebcamZestureGnome-1.0-executable.jar file into a folder. For example, if you want to map the gesture 'up' to the command 'volume_up', then change the entry of 'up' in file gestureMapper.properties to 'volume_up'. After saving the file, just zip to again and you are done.
 
+Currently the application will work better if your background is not changing very frequently.
