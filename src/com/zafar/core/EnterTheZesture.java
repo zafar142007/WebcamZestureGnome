@@ -27,10 +27,10 @@ public class EnterTheZesture {
 		Webcam webcam=null;
 		try {
 		
-			List<Webcam> w = Webcam.getWebcams();
+			webcam = Webcam.getDefault();
 			BufferedImage image;
-			System.out.println(w.size() + w.get(0).getName());
-			webcam = w.get(0);
+			System.out.println(webcam.getName());
+			
 			webcam.setViewSize(new Dimension(320, 240));
 			webcam.open();
 			while(!Thread.interrupted()) {
