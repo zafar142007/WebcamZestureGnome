@@ -25,14 +25,27 @@ public class EnterTheZesture {
 
 	public void readFromCam() {
 		Webcam webcam=null;
+		BufferedImage image;
+		boolean status=false;
 		try {
-		
-			webcam = Webcam.getDefault();
-			BufferedImage image;
-			System.out.println(webcam.getName());
-			
-			webcam.setViewSize(new Dimension(320, 240));
-			webcam.open();
+			List<Webcam> webcams=Webcam.getWebcams();
+			for(Webcam cam:webcams){
+				try{
+					webcam = cam;
+					System.out.println("Trying capturing "+webcam.getName());
+					
+					webcam.setViewSize(new Dimension(320, 240));
+					if(status=webcam.open()){
+						break;
+					}
+				}
+				catch (Exception e) {
+					System.out.println("Your camera "+webcam.getName()+" may be blocked / in use");
+					e.printStackTrace();
+				}
+			}
+			if(!status)
+				return;
 			while(!Thread.interrupted()) {
 
 				image = webcam.getImage();
@@ -45,6 +58,7 @@ public class EnterTheZesture {
 
 
 		} catch (Exception e) {
+			System.out.println("Some error occurred");
 			e.printStackTrace();
 		}
 		finally{
