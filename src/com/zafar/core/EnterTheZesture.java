@@ -34,7 +34,7 @@ public class EnterTheZesture {
 					webcam = cam;
 					System.out.println("Trying capturing "+webcam.getName());
 					
-					webcam.setViewSize(new Dimension(320, 240));
+			//		webcam.setViewSize(new Dimension(320, 240));
 					if(status=webcam.open()){
 						break;
 					}

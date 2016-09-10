@@ -43,11 +43,14 @@ public class CommandMaster {
 
 	}
 	public void executeCommand(String gesture){
-		try {
-			String command=(String) gestureMapper.get(gesture);
-			controller.execute(interpret(command));
-		} catch (CommandNotFoundException e) {
-			e.printStackTrace();
-		}
+		String command=(String) gestureMapper.get(gesture);
+		Runnable job=()->{
+				try {
+					controller.execute(interpret(command));
+				} catch (CommandNotFoundException e) {
+					e.printStackTrace();
+				}
+		};
+		new Thread(job).start();
 	}
 }
