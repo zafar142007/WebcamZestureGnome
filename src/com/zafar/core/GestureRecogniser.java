@@ -21,21 +21,22 @@ public class GestureRecogniser implements Runnable {
 		String currentDirection = "";
 		int countLeft = 0, countRight = 0, countDown = 0, countUp = 0, countNone = 0;
 		BufferedImage image = null, previousImage = null;
-		java.awt.Point point = new java.awt.Point(0, 0), previousPoint = null;
-		int i = 0;
+		java.awt.Point point = new java.awt.Point(0, 0), previousPoint = null, temp;
 		try {
 			while (!Thread.interrupted()) {
 				previousImage = image;
 				image = video.take();
-				i++;
-				// System.out.println("read "+i);
+	//			System.out.println("read "+i);
 				if (previousImage == null)
 					previousImage = image;
 				previousPoint = point;
-				point = findMovingCentroid(image, previousImage,
+				temp = findMovingCentroid(image, previousImage,
 						Configuration.CHANGE_THRESHOLD);
+				if(temp.getX()==0 && temp.getY()==0)
+					continue;
+				point=temp;
 				currentDirection = findDirection(point, previousPoint);
-				// System.out.println(currentDirection);
+			//	 System.out.println(currentDirection);
 
 				if (queue.size() == Configuration.WINDOW_SIZE) {
 					String expelled = queue.poll();
@@ -134,7 +135,6 @@ public class GestureRecogniser implements Runnable {
 
 			}
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -168,9 +168,9 @@ public class GestureRecogniser implements Runnable {
 
 		double differenceValue = 0;
 		double centroidX = 0, centroidY = 0;
-		int count = 0;
-		for (int x = 0; x < image.getWidth(); ++x)
-			for (int y = 0; y < image.getHeight(); ++y) {
+		int count = 0, maxHeight=image.getHeight(), maxWidth=image.getWidth();
+		for (int x = 0; x < maxWidth; ++x)
+			for (int y = 0; y < maxHeight; ++y) {
 				differenceValue = Math.abs(image.getRGB(x, y)
 						- previousImage.getRGB(x, y));
 				if (differenceValue > threshold) {
@@ -179,6 +179,9 @@ public class GestureRecogniser implements Runnable {
 					count++;
 				}
 			}
+		if(count==0){
+			return new java.awt.Point(0,0);
+		}
 		return new java.awt.Point((int) (centroidX / count),
 				(int) (centroidY / count));
 	}

@@ -57,17 +57,18 @@ public class EnterTheZesture {
 			if(!status)
 				return;
 			while(!Thread.interrupted()) {
-
 				image = webcam.getImage();
-				video.put(image);
-				// System.out.println("put "+i);
+				if(image!=null){
+					video.put(image);
+					
+				}
 			}
 
 			// ImageIO.write(image, "PNG", new File("motion"+i+".png"));
 
 
 		} catch (Exception e) {
-			System.out.println("Some error occurred");
+			System.out.println("Some error occurred "+video.size());
 			e.printStackTrace();
 		}
 		finally{
