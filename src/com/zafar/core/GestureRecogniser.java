@@ -17,6 +17,7 @@ public class GestureRecogniser implements Runnable {
 
 	@Override
 	public void run() {
+		List<String> list;
 		String currentDirection = "";
 		int countLeft = 0, countRight = 0, countDown = 0, countUp = 0, countNone = 0;
 		BufferedImage image = null, previousImage = null;
@@ -67,7 +68,7 @@ public class GestureRecogniser implements Runnable {
 					if (countLeft > Configuration.REPETITION_THRESHOLD) {
 						System.out.println("Gesture detected: "
 								+ Direction.LEFT);
-						List<String> list= (new ArrayList<String>());
+						list= (new ArrayList<String>());
 						list.add(Direction.LEFT);
 						queue.removeAll(list);//this is so that this gesture is not recognised repeatedly in succession
 						countLeft=0;
@@ -80,7 +81,7 @@ public class GestureRecogniser implements Runnable {
 					if (countRight > Configuration.REPETITION_THRESHOLD) {
 						System.out.println("Gesture detected: "
 								+ Direction.RIGHT);
-						List<String> list= (new ArrayList<String>());
+						list= (new ArrayList<String>());
 						list.add(Direction.RIGHT);
 						queue.removeAll(list);
 						countRight=0;
@@ -93,7 +94,7 @@ public class GestureRecogniser implements Runnable {
 					countUp++;
 					if (countUp > Configuration.REPETITION_THRESHOLD) {
 						System.out.println("Gesture detected: " + Direction.UP);
-						List<String> list= (new ArrayList<String>());
+						list= (new ArrayList<String>());
 						list.add(Direction.UP);
 						queue.removeAll(list);
 						countUp=0;
@@ -107,7 +108,7 @@ public class GestureRecogniser implements Runnable {
 					if (countDown > Configuration.REPETITION_THRESHOLD) {
 						System.out.println("Gesture detected: "
 								+ Direction.DOWN);
-						List<String> list= (new ArrayList<String>());
+						list= (new ArrayList<String>());
 						list.add(Direction.DOWN);
 						queue.removeAll(list);
 						countDown=0;
@@ -123,7 +124,7 @@ public class GestureRecogniser implements Runnable {
 					{	
 						System.out.println("Gesture detected: "
 								+ Direction.NONE);
-						List<String> list= (new ArrayList<String>());
+						list= (new ArrayList<String>());
 						list.add(Direction.NONE);
 						queue.removeAll(list);
 						countNone=0;
